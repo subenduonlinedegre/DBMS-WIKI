@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Ddl - My Docs</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">My Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">DBMS - Structured Query Language (SQL)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../PLSQL/" class="nav-link">PLSQL</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../dcl/" class="nav-link">Dcl</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Ddl</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../dml/" class="nav-link">Dml</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../psycopg/" class="nav-link">Psycopg</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../tcl/" class="nav-link">Tcl</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../dcl/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../dml/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#data-definition-language-ddl" class="nav-link">DATA DEFINITION LANGUAGE (DDL)</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#schema-for-university-database" class="nav-link">Schema for University Database</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#creating-classroom-table" class="nav-link">Creating classroom table.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#creating-table-department" class="nav-link">Creating table department</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#creating-table-course" class="nav-link">Creating table course</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#creating-table-instructor" class="nav-link">Creating table instructor</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#creating-table-section" class="nav-link">Creating table section</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#creating-table-teaches" class="nav-link">Creating table teaches</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#creating-table-student" class="nav-link">Creating table student</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#creating-table-takes" class="nav-link">Creating table takes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#creating-table-advisor" class="nav-link">Creating table advisor</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#creating-table-advisor_1" class="nav-link">Creating table advisor</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#creating-table-prereq" class="nav-link">Creating table prereq</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#alter-command" class="nav-link">ALTER command</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#drop-command" class="nav-link">DROP command</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#views" class="nav-link">Views:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#creating-index" class="nav-link">Creating Index</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#creating-user-defined-types" class="nav-link">Creating User-defined types:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#creating-user-defined-domains" class="nav-link">Creating User-defined domains:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="..">Home</a></p>
+<h1 id="data-definition-language-ddl">DATA DEFINITION LANGUAGE (DDL)</h1>
+<p>Here, we start by creating the University Database schema (given below) used in the recorded lectures to give the essence of the SQL Data Definition Language (DDL) commands in SQL.</p>
+<h2 id="schema-for-university-database">Schema for University Database</h2>
+<p><img alt="Univeristy database schema" src="../Images/Universityschema.png" /></p>
+<p>DDL consists of:
+* Schema
+* Domain of attributes
+  * char(n)
+  * varchar(n)
+  * int
+  * smallint
+  * numeric(p,d)
+  * real, double precision
+  * float
+* Integrity Constraints
+  * not null
+  * primary key
+  * foreign key references r (Referential Integrity Constraint)</p>
+<p>Some more datatypes in SQL:
+* <code>date</code>: Dates, containing a (4 digit) year, month and date.<br />
+Example: date '2005-7-27'
+* <code>time</code>: Time of day, in hours, minutes and seconds.<br />
+Example: time '09:00:30' time '09:00:30.75'
+* <code>timestamp</code>: date plus time of day.<br />
+Example: timestamp '2005-7-27 09:00:30.75'
+* <code>interval</code>: period of time.
+Example:interval '1' day
+  * Subtracting a date/time/timestamp value from another = interval value.
+  * Interval values can be added to date/time/timestamp values.  </p>
+<hr />
+<p><strong>SYNTAX of table creation</strong></p>
+<p>Creating a table:</p>
+<pre><code>create table r (AD1, A2D2, . . . , AnDn),
+               (integrity-constraint1),
+                . . .
+                (integrity-constraintk));
+</code></pre>
+<p>where<br />
+r = relation name.<br />
+Ai = Attribute name.<br />
+Di = Domain name.  </p>
+<p>Let us start creating the University Database.</p>
+<h2 id="creating-classroom-table">Creating classroom table.</h2>
+<pre><code class="language-sql">create table classroom
+    (building       varchar(15),
+     room_number        varchar(7),
+     capacity       numeric(4,0),
+     primary key (building, room_number)
+    );
+</code></pre>
+<p>The above table has 3 columns:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Domain</th>
+<th>Integrity Constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>building</td>
+<td>varchar(15)</td>
+<td>primary key (composite)</td>
+</tr>
+<tr>
+<td>room_number</td>
+<td>varchar(7)</td>
+<td>primary key (composite)</td>
+</tr>
+<tr>
+<td>capacity</td>
+<td>numeric(4,0)</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Here, both building and room_number uniquely identify every tuple present in the table classroom.</li>
+<li>The domain type of <em>varchar(15)</em> of <em>building</em> means that a user can add any variable length string with a maximum limit of 15 characters.</li>
+<li>The domain type <em>numeric(4,0)</em> of <em>capacity</em> allows a total of 4 digits to be stored out of which 0 digits should be on the right hand side of the decimal point.</li>
+</ul>
+<h2 id="creating-table-department">Creating table department</h2>
+<pre><code class="language-sql">create table department
+    (dept_name      varchar(20), 
+     building       varchar(15), 
+     budget             numeric(12,2) check (budget &gt; 0),
+     primary key (dept_name)
+    );
+</code></pre>
+<p>The above table has 3 columns:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Domain</th>
+<th>Integrity Constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dept_name</td>
+<td>varchar(20)</td>
+<td>primary key</td>
+</tr>
+<tr>
+<td>building</td>
+<td>varchar(15)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>budget</td>
+<td>numeric(12,2)</td>
+<td>check (budget &gt; 0)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Here the integrity constraint <strong>check (budget &gt; 0)</strong> ensures that all the values in the budget column should be greater than 0.</li>
+</ul>
+<h2 id="creating-table-course">Creating table course</h2>
+<pre><code class="language-sql">create table course
+    (course_id      varchar(8), 
+     title          varchar(50), 
+     dept_name      varchar(20),
+     credits        numeric(2,0) check (credits &gt; 0),
+     primary key (course_id),
+     foreign key (dept_name) references department (dept_name)
+        on delete set null
+    );
+</code></pre>
+<p>The above table has 4 columns:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Domain</th>
+<th>Integrity Constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>course_id</td>
+<td>varchar(8)</td>
+<td>primary key</td>
+</tr>
+<tr>
+<td>title</td>
+<td>varchar(50)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>dept_name</td>
+<td>varchar(20)</td>
+<td>foreign key (dept_name) references department (dept_name) on delete set null</td>
+</tr>
+<tr>
+<td>credits</td>
+<td>numeric(2,0)</td>
+<td>check (credits &gt; 0)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Here, the attribute <em>dept_name</em> acts as a foreign key that refers to the primary key <em>dept_name</em> of the <em>department</em> table. It is used to link tables in SQL.</li>
+<li>The integrity contraint <em>on delete set null</em> acts on the foreign key <em>dept_name</em>. If the records in the base table <em>department</em> are deleted, the corresponding foreign key records are not deleted, they are instead, updated to <strong>NULL</strong>.</li>
+</ul>
+<h2 id="creating-table-instructor">Creating table instructor</h2>
+<pre><code class="language-sql">create table instructor
+    (ID         varchar(5), 
+     name           varchar(20) not null, 
+     dept_name      varchar(20), 
+     salary         numeric(8,2) check (salary &gt; 29000),
+     primary key (ID),
+     foreign key (dept_name) references department (dept_name)
+        on delete set null
+    );
+</code></pre>
+<p>The above table has 3 columns:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Domain</th>
+<th>Integrity Constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ID</td>
+<td>varchar(5)</td>
+<td>primary key</td>
+</tr>
+<tr>
+<td>name</td>
+<td>varchar(20)</td>
+<td>not null</td>
+</tr>
+<tr>
+<td>dept_name</td>
+<td>varchar(20)</td>
+<td>foreign key (dept_name) references department (dept_name) on delete set null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="creating-table-section">Creating table section</h2>
+<pre><code class="language-sql">create table section
+    (course_id      varchar(8), 
+         sec_id         varchar(8),
+     semester       varchar(6)
+        check (semester in ('Fall', 'Winter', 'Spring', 'Summer')), 
+     year           numeric(4,0) check (year &gt; 1701 and year &lt; 2100), 
+     building       varchar(15),
+     room_number        varchar(7),
+     time_slot_id       varchar(4),
+     primary key (course_id, sec_id, semester, year),
+     foreign key (course_id) references course (course_id)
+        on delete cascade,
+     foreign key (building, room_number) references classroom (building, room_number)
+        on delete set null
+    );
+</code></pre>
+<p>The above table has 7 columns:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Domain</th>
+<th>Integrity Constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>course_id</td>
+<td>varchar(8)</td>
+<td>primary key (composite), foreign key (course_id) references course (course_id) on delete cascade</td>
+</tr>
+<tr>
+<td>sec_id</td>
+<td>varchar(8)</td>
+<td>primary key (composite)</td>
+</tr>
+<tr>
+<td>semester</td>
+<td>varchar(6)</td>
+<td>check (semester in ('Fall', 'Winter', 'Spring', 'Summer'))</td>
+</tr>
+<tr>
+<td>year</td>
+<td>numeric(4,0)</td>
+<td>check (year &gt; 1701 and year &lt; 2100)</td>
+</tr>
+<tr>
+<td>building</td>
+<td>varchar(15)</td>
+<td>foreign key (building, room_number) references classroom (building, room_number)</td>
+</tr>
+<tr>
+<td>room_number</td>
+<td>varchar(7)</td>
+<td>foreign key (building, room_number) references classroom (building, room_number)</td>
+</tr>
+<tr>
+<td>time_slot_id</td>
+<td>varchar(4)</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Hear we have 2 foreign keys:</li>
+<li><em>course_id</em> - a single foreign key linking the table <em>section</em> with the table <em>course</em> having a single primary key <em>course_id</em></li>
+<li><em>(building, room_number)</em> - a composite foreign key linking the table <em>classroom</em> having a composite primary key <em>(building, room_number)</em>. </li>
+</ul>
+<p><strong>Similarly the other tables have been created below...</strong></p>
+<h2 id="creating-table-teaches">Creating table teaches</h2>
+<pre><code class="language-sql">create table teaches
+    (ID         varchar(5), 
+     course_id      varchar(8),
+     sec_id         varchar(8), 
+     semester       varchar(6),
+     year           numeric(4,0),
+     primary key (ID, course_id, sec_id, semester, year),
+     foreign key (course_id, sec_id, semester, year) references section (course_id, sec_id, semester, year)
+        on delete cascade,
+     foreign key (ID) references instructor (ID)
+        on delete cascade
+    );
+</code></pre>
+<hr />
+<h2 id="creating-table-student">Creating table student</h2>
+<pre><code class="language-sql">create table student
+    (ID         varchar(5), 
+     name           varchar(20) not null, 
+     dept_name      varchar(20), 
+     tot_cred       numeric(3,0) check (tot_cred &gt;= 0),
+     primary key (ID),
+     foreign key (dept_name) references department (dept_name)
+        on delete set null
+    );
+
+</code></pre>
+<hr />
+<h2 id="creating-table-takes">Creating table takes</h2>
+<pre><code class="language-sql">create table takes
+    (ID         varchar(5), 
+     course_id      varchar(8),
+     sec_id         varchar(8), 
+     semester       varchar(6),
+     year           numeric(4,0),
+     grade              varchar(2),
+     primary key (ID, course_id, sec_id, semester, year),
+     foreign key (course_id, sec_id, semester, year) references section (course_id, sec_id, semester, year)
+        on delete cascade,
+     foreign key (ID) references student (ID)
+        on delete cascade
+    );
+
+</code></pre>
+<hr />
+<h2 id="creating-table-advisor">Creating table advisor</h2>
+<pre><code class="language-sql">create table advisor
+    (s_ID           varchar(5),
+     i_ID           varchar(5),
+     primary key (s_ID),
+     foreign key (i_ID) references instructor (ID)
+        on delete set null,
+     foreign key (s_ID) references student (ID)
+        on delete cascade
+    );
+</code></pre>
+<hr />
+<h2 id="creating-table-advisor_1">Creating table advisor</h2>
+<pre><code class="language-sql">create table time_slot
+    (time_slot_id       varchar(4),
+     day            varchar(1),
+     start_hr       numeric(2) check (start_hr &gt;= 0 and start_hr &lt; 24),
+     start_min      numeric(2) check (start_min &gt;= 0 and start_min &lt; 60),
+     end_hr         numeric(2) check (end_hr &gt;= 0 and end_hr &lt; 24),
+     end_min        numeric(2) check (end_min &gt;= 0 and end_min &lt; 60),
+     primary key (time_slot_id, day, start_hr, start_min)
+    );
+
+
+</code></pre>
+<hr />
+<h2 id="creating-table-prereq">Creating table prereq</h2>
+<pre><code class="language-sql">create table prereq
+    (course_id      varchar(8), 
+     prereq_id      varchar(8),
+     primary key (course_id, prereq_id),
+     foreign key (course_id) references course (course_id)
+        on delete cascade,
+     foreign key (prereq_id) references course (course_id)
+    );
+
+
+</code></pre>
+<hr />
+<p>Let us create a test table r to run the commands to modify the table.</p>
+<pre><code class="language-sql">create table r
+    (build      varchar(15),
+     room       varchar(7),
+     capa       numeric(4,0),
+     primary key (build, room)
+    );
+</code></pre>
+<hr />
+<h2 id="alter-command">ALTER command</h2>
+<ul>
+<li>Used to modify already created tables in the database.  </li>
+</ul>
+<p><strong>Adding a column:</strong></p>
+<pre><code>alter table r add A D
+</code></pre>
+<p>where<br />
+r = name of the relation to be modified.<br />
+A = Name of the new column to be added.<br />
+D = Domain name of the new column A.</p>
+<pre><code class="language-sql">ALTER TABLE r ADD newcol varchar(5)
+
+</code></pre>
+<ul>
+<li>The above command adds a new attribute names <em>newcol</em> of domain type <em>varchar(5)</em> to the table <em>r</em>.</li>
+</ul>
+<p><strong>Dropping an existing column:</strong>  </p>
+<p><strong>SYNTAX</strong>  </p>
+<pre><code>alter table r drop A 
+</code></pre>
+<p>where<br />
+r = name of the relation<br />
+A = name of the attribute to be dropped.</p>
+<h2 id="drop-command">DROP command</h2>
+<ul>
+<li>To remove an existing table from the database.</li>
+</ul>
+<p><strong>SYNTAX</strong></p>
+<pre><code class="language-sql">drop table r 
+</code></pre>
+<p>where r = name of the existing table to be dropped.  </p>
+<p>If the table r already exists, it will be dropped successfully. </p>
+<pre><code>DROP TABLE
+
+Query returned successfully in 65 msec.
+</code></pre>
+<p>But if it does not exist, an error message will be printed out.</p>
+<pre><code>ERROR:  table &quot;r&quot; does not exist
+SQL state: 42P01
+</code></pre>
+<p>Handling the error using 'IF EXISTS' clause:</p>
+<pre><code class="language-sql">DROP TABLE IF EXISTS r;
+</code></pre>
+<p>This will handle the error and raise a notice instead.</p>
+<pre><code>NOTICE:  table &quot;r&quot; does not exist, skipping
+DROP TABLE
+
+Query returned successfully in 77 msec.
+</code></pre>
+<h2 id="views">Views:</h2>
+<ul>
+<li>Any relation that is not of the conceptual model but is made visible to a user as a “virtual relation”.
+<strong>SYNTAX:</strong></li>
+</ul>
+<pre><code>create view v as &lt;query expression&gt;
+</code></pre>
+<p>where \<query expression> is any legal SQL expression.</p>
+<p>View definition is not the same as creating a new relation by evaluating the query
+expression.<br />
+* A view definition causes the saving of an expression;the expression is
+substituted into queries using the view.</p>
+<p>A view of instructors without their salary:</p>
+<pre><code class="language-sql">create view faculty as
+select ID, name, dept_name
+from instructor
+</code></pre>
+<p>Find all instructors in the Biology department.</p>
+<pre><code class="language-sql">select name
+from faculty
+where dept_name = 'Biology'
+</code></pre>
+<p>Create a view of department salary totals</p>
+<pre><code class="language-sql">create view departments_total_salary(dept_name, total_salary) as
+select dept_name, sum(salary)
+from instructor
+group by dept_name;
+</code></pre>
+<h3 id="defining-views-using-other-views">Defining views using other views.</h3>
+<pre><code class="language-sql">create view physics_fall_2009 as
+select course.course_id, sec_id, building, room_number
+from course, section
+where course.course_id = section.course_id
+    and course.dept_name = 'Physics'
+    and section.semester = 'Fall'
+    and section.year = '2009'
+</code></pre>
+<pre><code class="language-sql">create view physics_fall_2009 watson as
+select course_id, room_number
+from physics_fall_2009
+where building= 'Watson'
+</code></pre>
+<h3 id="view-expansion">View Expansion</h3>
+<pre><code class="language-sql">create view physics_fall_2009 watson as
+(select course_id, room_number
+from (select course.course_id, building, room_number
+    from course, section
+    where course.course_id = section.course_id
+        and course.dept_name = 'Physics'
+        and section.semester = 'Fall'
+        and section.year = '2009')
+where building= 'Watson')
+</code></pre>
+<p>• A view relation v1 is said to depend directly on a view relation v2 if v2 is used in the
+expression defining v1.<br />
+• A view relation v1 is said to depend on view relation v2 if either v1 depends directly on
+v2 or there is a path of dependencies from v1 to v2.<br />
+• A view relation v is said to be recursive if it depends on itself.<br />
+Let view v1 be defined by an expression e1 that may itself contain uses of view relations
+• View expansion of an expression repeats the following replacement step:</p>
+<pre><code>repeat
+    Find any view relation vi in e1
+    Replace the view relation vi by the expression defining vi
+until no more view relations are present in e1
+</code></pre>
+<p>• As long as the view definitions are not recursive, this loop will terminate.</p>
+<h3 id="updating-view">Updating View</h3>
+<p>Adding a new tuple to faculty view:</p>
+<pre><code class="language-sql">insert into faculty values ('30765', 'Green', 'Music')
+</code></pre>
+<ul>
+<li>Inserts the tuple ('30765', 'Green', 'Music', null) into the instructor relation.  </li>
+</ul>
+<pre><code class="language-sql">create view instructor info as
+select ID, name, building
+from instructor, department
+where instructor.dept_name= department.dept_name
+</code></pre>
+<pre><code class="language-sql">insert into instructor info values ('69987', 'White', 'Taylor')
+</code></pre>
+<ul>
+<li>which department, if multiple departments in Taylor?  </li>
+<li>what if no department is in Taylor?</li>
+<li>Most SQL implementations allow updates only on simple views</li>
+<li>The from clause has only one database relation</li>
+<li>The select clause contains only attribute names of the relation, and does not have
+any expressions, aggregates, or distinct specification</li>
+<li>Any attribute not listed in the select clause can be set to null</li>
+<li>The query does not have a group by or having clause</li>
+</ul>
+<pre><code class="language-sql">create view history_instructors as
+    select *
+    from instructor
+    where dept_name= 'History'
+</code></pre>
+<ul>
+<li>What happens if we insert ('25566', 'Brown', 'Biology', 100000) into
+history instructors?</li>
+<li></li>
+</ul>
+<hr />
+<h3 id="materialised-views">Materialised Views</h3>
+<ul>
+<li>Materializing a view: create a physical table containing all the tuples in the result of
+the query defining the view</li>
+<li>If relations used in the query are updated, the materialized view result becomes out of
+date</li>
+<li>Need to maintain the view, by updating the view whenever the underlying relations
+are updated</li>
+</ul>
+<hr />
+<h2 id="creating-index">Creating Index</h2>
+<ul>
+<li>Index: data structures used to speed up access to records with specified values for index attributes.  </li>
+</ul>
+<p>Creating an index on the table <em>student</em> on the attribute <em>studentID</em>:</p>
+<pre><code class="language-sql">create index studentID index on student(ID)
+</code></pre>
+<ul>
+<li>This allows the query:</li>
+<li><code>sql
+    select *
+    from student
+    where ID = '12345'</code>
+    to be executed in an efficient way by making use of the index directly without making use of all the records of the relation.</li>
+</ul>
+<h2 id="creating-user-defined-types">Creating User-defined types:</h2>
+<pre><code class="language-sql">create type Dollars as numeric (12,2) final
+create table department (
+dept name varchar (20),
+building varchar (15),
+budget Dollars)
+</code></pre>
+<ul>
+<li>The above query creates a user-defined type <em>Dollars</em> to be used as a data type of the <em>budget</em> attribute in the table <em>department</em>.</li>
+</ul>
+<h2 id="creating-user-defined-domains">Creating User-defined domains:</h2>
+<pre><code class="language-sql">create domain degree_level varchar(10)
+constraint degree_level_test
+check (value in ('Bachelors', 'Masters', 'Doctorate'))
+</code></pre>
+<ul>
+<li>Types and domains are similar.</li>
+<li>The above query constructs a new domain called <em>degree_level</em> which can have certain constraints applied on them as well.</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

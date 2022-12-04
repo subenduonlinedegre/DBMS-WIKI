@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Psycopg - My Docs</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">My Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">DBMS - Structured Query Language (SQL)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../PLSQL/" class="nav-link">PLSQL</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../dcl/" class="nav-link">Dcl</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ddl/" class="nav-link">Ddl</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../dml/" class="nav-link">Dml</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Psycopg</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../tcl/" class="nav-link">Tcl</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../dml/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../tcl/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#connecting-with-python" class="nav-link">Connecting with Python</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#installing-psycopg2" class="nav-link">Installing psycopg2</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#accessing-postgressql-from-python-using-psycopg" class="nav-link">Accessing PostgresSQL from Python using Psycopg</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#insert-query-execution-using-python" class="nav-link">INSERT QUERY EXECUTION USING PYTHON:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#delete-query-execution-using-python" class="nav-link">DELETE QUERY EXECUTION USING PYTHON:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#update-query-execution-using-python" class="nav-link">UPDATE QUERY EXECUTION USING PYTHON:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#select-query-execution-using-python" class="nav-link">SELECT QUERY EXECUTION USING PYTHON:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="..">Home</a></p>
+<h1 id="connecting-with-python">Connecting with Python</h1>
+<p>Out of the many python packages used tow ork with Postgresql database server, we will be using <strong>psycopg2</strong> package.  </p>
+<h2 id="installing-psycopg2">Installing psycopg2</h2>
+<ul>
+<li>pip command to install psycopg2</li>
+<li>Works on different operating systems including Windows, MacOS, Linux, and Unix</li>
+</ul>
+<pre><code>pip install psycopg2
+</code></pre>
+<ul>
+<li>Installing specific version:</li>
+</ul>
+<pre><code>pip install psycopg2=2.8.6
+</code></pre>
+<h2 id="accessing-postgressql-from-python-using-psycopg">Accessing PostgresSQL from Python using Psycopg</h2>
+<h3 id="creating-connection">Creating Connection:</h3>
+<ul>
+<li>Importing the package</li>
+</ul>
+<pre><code class="language-python">import psycopg2
+</code></pre>
+<ul>
+<li>This imports the python package psycopg2.</li>
+</ul>
+<pre><code class="language-python">psycopg2.connect(database=&quot;mydb&quot;, user=&quot;myuser&quot;, password=&quot;mypass&quot;
+host=&quot;127.0.0.1&quot;, port=&quot;5432&quot;)
+</code></pre>
+<ul>
+<li>It is a module API that opens a connection to the PostgreSQL database. If successfully opened, it returns a connection object.  </li>
+<li>Thus, the connection command should be included in the try-except block in order to handle the error if the connection is not successfully opened. </li>
+<li>After doing the required work, connection should be closed finally. So we need to close the exception in the finally block.  </li>
+</ul>
+<p>Below is the code for openning and closing a basic connection object.</p>
+<pre><code class="language-python">import psycopg2
+def connectDb(dbname, usrname, pwd, address, portnum):
+    conn = None
+    try:
+        # connect to the PostgreSQL database
+        conn = psycopg2.connect(database = dbname, user = usrname, \
+        password = pwd, host = address, port = portnum)
+        print (&quot;Database connected successfully&quot;)
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        conn.close() # close the connection
+        connectDb(&quot;mydb&quot;, &quot;myuser&quot;, &quot;mypass&quot;, &quot;127.0.0.1&quot;, &quot;5432&quot;) # function call
+</code></pre>
+<p>OUTPUT:</p>
+<pre><code>Database Connected Successfully
+</code></pre>
+<h3 id="creating-a-cursor">Creating a cursor</h3>
+<pre><code>connection.cursor()
+</code></pre>
+<p>This routine creates a cursor which will be used throughout the program.  </p>
+<pre><code>cursor.close()  
+</code></pre>
+<p>This method closes the cursor.</p>
+<h3 id="executing-the-query-using-cursor">Executing the query using cursor</h3>
+<pre><code>cursor.execute(sql [, optional parameters])
+</code></pre>
+<p>This routine executes an SQL statement. The SQL statement may be parameterized
+(i.e., placeholders instead of SQL literals). The psycopg2 module supports placeholder
+using %s sign. For example:</p>
+<pre><code>cursor.execute(&quot;insert into people values (%s,%s)&quot;, (who, age))
+</code></pre>
+<pre><code>cursor.executemany(sql, seq of parameters)
+</code></pre>
+<p>This routine executes an SQL command against all parameter sequences or mappings
+found in the sequence SQL.</p>
+<pre><code>cursor.callproc(procname[, parameters])
+</code></pre>
+<p>This routine executes a stored database procedure with the given name. The sequence
+of parameters must contain one entry for each argument that the procedure expects.</p>
+<pre><code>cursor.rowcount
+</code></pre>
+<p>This is a read-only attribute which returns the total number of database rows that have
+been modified, inserted, or deleted by the last <code>execute()</code>.</p>
+<h3 id="fetching-the-results-of-the-query">Fetching the results of the query</h3>
+<pre><code>cursor.fetchone()
+</code></pre>
+<p>This method fetches the next row of a query result set, returning a single sequence, or
+None when no more data is available.</p>
+<pre><code>cursor.fetchmany([size=cursor.arraysize])
+</code></pre>
+<p>This routine fetches the next set of rows of a query result, returning a list. An empty list
+is returned when no more rows are available. The method tries to fetch as many rows as
+indicated by the size parameter.</p>
+<pre><code>cursor.fetchall()
+</code></pre>
+<p>This routine fetches all (remaining) rows of a query result, returning a list. An empty
+list is returned when no rows are available.</p>
+<h3 id="commit-to-make-changed-persistentrollback-to-reverse">Commit to make changed persistent/Rollback to reverse</h3>
+<pre><code>connection.commit()
+</code></pre>
+<p>This method commits the current transaction. If you do not call this method, anything
+you did since the last call to commit() is not visible to other database connections.</p>
+<pre><code>connection.rollback()
+</code></pre>
+<p>This method rolls back any changes to the database since the last call to <code>commit()</code>.</p>
+<pre><code class="language-python">import psycopg2
+def createTable():
+    conn = None
+    try:
+        conn = psycopg2.connect(database = &quot;mydb&quot;, user = &quot;myuser&quot;, \
+        password = &quot;mypass&quot;, host = &quot;127.0.0.1&quot;, port = &quot;5432&quot;) # connect to    the    database
+        cur = conn.cursor() # create a new cursor
+        cur.execute(’’’CREATE TABLE EMPLOYEE \
+        (emp_num INT PRIMARY KEY NOT NULL, \
+        emp_name VARCHAR(40) NOT NULL, \
+        department VARCHAR(40) NOT NULL)’’’) # execute the CREATE TABLE statement
+        conn.commit() # commit the changes to the database
+        print (&quot;Table created successfully&quot;)
+        cur.close() # close the cursor
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close() # close the connection
+            createTable() #function call
+</code></pre>
+<p>OUTPUT:
+* If the employee table already exists:</p>
+<pre><code>relation &quot;employee&quot; already exists.
+</code></pre>
+<ul>
+<li>If the employee tables does not already exist:</li>
+</ul>
+<pre><code>Table created successfully
+</code></pre>
+<hr />
+<h2 id="insert-query-execution-using-python">INSERT QUERY EXECUTION USING PYTHON:</h2>
+<pre><code class="language-python">import psycopg2
+def insertRecord(num, name, dept):
+    conn = None
+    try:
+        # connect to the PostgreSQL database
+        conn = psycopg2.connect(database = &quot;mydb&quot;, user = &quot;myuser&quot;, \
+        password = &quot;mypass&quot;, host = &quot;127.0.0.1&quot;, port = &quot;5432&quot;)
+        cur = conn.cursor() # create a new cursor
+        # execute the INSERT statement
+        cur.execute(&quot;INSERT INTO EMPLOYEE (emp_num, emp_name, department) \
+        VALUES (%s, %s, %s)&quot;, (num, name, dept))
+        conn.commit() # commit the changes to the database
+        print (&quot;Total number of rows inserted :&quot;, cur.rowcount);
+        cur.close() # close the cursor
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close() # close the connection
+insertRecord(110, ‘Bhaskar’, ’HR’) #function call
+</code></pre>
+<p>OUTPUT:
+* If a row already exists with emp_num=110:</p>
+<pre><code>duplicate key value violates unique constraint &quot;employee_pkey&quot;
+DETAIL: Key (emp_num)=(110) already exists.
+</code></pre>
+<ul>
+<li>If a row with emp_num=110 does not already exist:</li>
+</ul>
+<pre><code>Total nnumber of rows inserted : 1
+</code></pre>
+<h2 id="delete-query-execution-using-python">DELETE QUERY EXECUTION USING PYTHON:</h2>
+<pre><code class="language-python">import psycopg2
+def deleteRecord(num):
+    conn = None
+    try:
+        # connect to the PostgreSQL database
+        conn = psycopg2.connect(database = &quot;mydb&quot;, user = &quot;myuser&quot;, \
+        password = &quot;mypass&quot;, host = &quot;127.0.0.1&quot;, port = &quot;5432&quot;)
+        cur = conn.cursor() # create a new cursor
+        # execute the DELETE statement
+        cur.execute(&quot;DELETE FROM EMPLOYEE WHERE emp_num = %s&quot;, (num,))
+        conn.commit() # commit the changes to the database
+        print (&quot;Total number of rows deleted :&quot;, cur.rowcount)
+        cur.close() # close the cursor
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        conn.close() # close the connection
+deleteRecord(110) #function call
+</code></pre>
+<p>OUTPUT:
+* If a row does not already exist:</p>
+<pre><code>Total number of rows deleted : 0
+</code></pre>
+<ul>
+<li>If a row already exists:</li>
+</ul>
+<pre><code>Total number of rows deleted : 1
+</code></pre>
+<h2 id="update-query-execution-using-python">UPDATE QUERY EXECUTION USING PYTHON:</h2>
+<pre><code class="language-python">import psycopg2
+def updateRecord(num, dept):
+    conn = None
+    try:
+        # connect to the PostgreSQL database
+        conn = psycopg2.connect(database = &quot;mydb&quot;, user = &quot;myuser&quot;, \
+        password = &quot;mypass&quot;, host = &quot;127.0.0.1&quot;, port = &quot;5432&quot;)
+        cur = conn.cursor() # create a new cursor
+        # execute the UPDATE statement
+        cur.execute(&quot;UPDATE EMPLOYEE set department = %s where emp_num = \
+        %s&quot;, (dept, num))
+        conn.commit() # commit the changes to the database
+        print (&quot;Total number of rows updated :&quot;, cur.rowcount)
+        cur.close() # close the cursor
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        conn.close() # close the connection
+updateRecord(110, &quot;Finance&quot;) #function call
+</code></pre>
+<p>OUTPUT:
+* If a row does not already exist:</p>
+<pre><code>Total number of rows updated : 0
+</code></pre>
+<ul>
+<li>If a row already exists:</li>
+</ul>
+<pre><code>Total number of rows updated : 1
+</code></pre>
+<h2 id="select-query-execution-using-python">SELECT QUERY EXECUTION USING PYTHON:</h2>
+<pre><code class="language-python">import psycopg2
+def selectAll():
+    conn = None
+    try:
+        # connect to the PostgreSQL database
+        conn = psycopg2.connect(database = &quot;mydb&quot;, user = &quot;myuser&quot;, \
+        password = &quot;mypass&quot;, host = &quot;127.0.0.1&quot;, port = &quot;5432&quot;)
+        cur = conn.cursor() # create a new cursor
+        # execute the SELECT statement
+        cur.execute(&quot;SELECT emp_num, emp_name, department FROM EMPLOYEE&quot;)
+        rows = cur.fetchall() # fetches all rows of the query result set
+        for row in rows:
+        print (print (&quot;Employee ID = &quot;, row[0], &quot;, NAME = &quot;, \
+        row[1], &quot;, DEPARTMENT = &quot;, row[2]))
+        cur.close() # close the cursor
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        conn.close() # close the connection
+selectAll() # function call
+</code></pre>
+<p>OUTPUT:</p>
+<pre><code>EMPLOYEE ID = 110, NAME = Bhaskar, DEPARTMENT = HR
+EMPLOYEE ID = 111, NAME = Ishaan, DEPARTMENT = FINANCE
+EMPLOYEE ID = 112, NAME = Jairaj, DEPARTMENT = TECHNOLOGY
+EMPLOYEE ID = 113, NAME = Ananya, DEPARTMENT = TECHNOLOGY
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
