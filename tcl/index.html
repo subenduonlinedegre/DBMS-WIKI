@@ -96,6 +96,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#transaction-commands-in-sql" class="nav-link">Transaction Commands in SQL:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -108,24 +112,80 @@
 <h2 id="transaction">Transaction</h2>
 <ul>
 <li>Logical Unit of Work</li>
-<li>Begin implicitly</li>
+<li>Begins implicitly</li>
 <li>Ended by <strong>commit work</strong> or <strong>rollback work</strong>.</li>
+<li>Implicit commit can be turned off by a database directive
+− For example in JDBC, <code>connection.setAutoCommit(false)</code>;</li>
 </ul>
 <h3 id="acid">ACID</h3>
 <p>A-Atomicity<br />
 C-Consistency<br />
 I-Isolation<br />
 D-Durability  </p>
-<h3 id="integrity-constraints">Integrity Constraints</h3>
-<ul>
-<li>Guard against accidental damage to the database.</li>
-<li>Ensures that authorized changes to the database do not result in a loss of data consistency.</li>
-</ul>
-<h4 id="not-null">not null</h4>
-<pre><code class="language-sql">name varchar(20) not null
-budget numeric(12,2) not null
+<h2 id="transaction-commands-in-sql">Transaction Commands in SQL:</h2>
+<h3 id="commit"><code>COMMIT</code></h3>
+<p>To save all the transactions to the database since the last COMMIT or ROLLBACK command.</p>
+<pre><code class="language-sql">DELETE FROM instructor WHERE salary = 1000000;
+COMMIT;
 </code></pre>
-<h3 id="referential-integrity-constraints">Referential Integrity Constraints</h3></div>
+<ul>
+<li>The above command deletes all the tuples from the instructor table where the salary is 1000000.</li>
+<li>After deletion, the result is saved using <strong>commit</strong>. It ensures durability in a database.</li>
+<li>Postgresql autocommits all the transactions and thus there is an implicit commit in every command. Thus, even without writing commit, the transaction will be commmitted.</li>
+</ul>
+<h3 id="rollback"><code>ROLLBACK</code></h3>
+<p>To undo transactions that have not already been saved
+to the database.
+* To undo transactions since the last COMMIT or ROLLBACK command
+was issued.</p>
+<pre><code class="language-sql">DELETE FROM instructor WHERE id = '4034';
+ROLLBACK;
+</code></pre>
+<ul>
+<li>The above command first deletes the tuple corresponding to the id '4034' in instructor. But before commiting, a <strong>rollback</strong> is encountered due to which the delete is reversed and nothing is deleted from the instructor table.</li>
+</ul>
+<h3 id="savepoint"><code>SAVEPOINT</code></h3>
+<p>A point used to roll the transaction back to a certain point without rolling back the entire transaction.
+<strong>Syntax</strong> for creating a savepoint:</p>
+<pre><code>SAVEPOINT &lt;SAVEPOINT NAME&gt;;
+</code></pre>
+<p><strong>Syntax</strong> for rolling the transaction back to a savepoint:</p>
+<pre><code>ROLLBACK TO &lt;SAVEPOINT NAME&gt;;
+</code></pre>
+<pre><code class="language-sql">BEGIN;
+SAVEPOINT SP1;
+DELETE FROM instructor WHERE id = '4034';
+SAVEPOINT SP2;
+DELETE FROM instructor WHERE id = '50885';
+SAVEPOINT SP3;
+ROLLBACK TO SP2;
+</code></pre>
+<ul>
+<li>BEGIN keyword is required to begin the transaction.</li>
+<li>3 different Savepoints have been created - namely SP1, SP2 and SP3.</li>
+<li>The transaction rolls back to SP2 in the end which means that the tuple corresponding to the id '4034' has been deleted but the delere corresponding to the id '50885' has been rolled back since the savepoint is before that delete.</li>
+<li>Thus the resulting relation contains the id '50885' and lacks the id '4034'.</li>
+</ul>
+<p><strong>Syntax</strong> for deleting a savepoint:</p>
+<pre><code>RELEASE SAVEPOINT &lt;SAVEPOINT NAME&gt;;
+</code></pre>
+<ul>
+<li>Can no longer use the ROLLBACK
+command to undo transactions performed since the last SAVEPOINT.
+Example:</li>
+</ul>
+<pre><code class="language-sql">Release savepoint SP1;
+</code></pre>
+<p>The savepoint named SP1 created above has been deleted.</p>
+<h3 id="set-transaction"><code>SET TRANSACTION</code></h3>
+<p>Can be used to initiate a database transaction.
+* To specify characteristics for the transaction that follows.
+SYNTAX:</p>
+<pre><code>SET TRANSACTION [ READ WRITE | READ ONLY ];
+</code></pre>
+<ul>
+<li>The transaction is read only or read write.</li>
+</ul></div>
             </div>
         </div>
 

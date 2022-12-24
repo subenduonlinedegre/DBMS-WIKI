@@ -206,7 +206,7 @@ may retain the privilege after the revocation.
 <pre><code class="language-sql">create view geo_instructor as
 (select *
 from instructor
-where dept name = 'Geology');
+where dept_name = 'Geology');
 grant select on geo_instructor to geo_staff
 </code></pre>
 <ul>
@@ -214,7 +214,7 @@ grant select on geo_instructor to geo_staff
 </ul>
 <h2 id="other-features">Other features:</h2>
 <p>• references privilege to create foreign key</p>
-<pre><code class="language-sql">grant reference (dept name) on department to Mariano;
+<pre><code class="language-sql">grant reference (dept_name) on department to Mariano;
 </code></pre>
 <ul>
 <li>This is required to grant the referential integrity constraint.  </li>

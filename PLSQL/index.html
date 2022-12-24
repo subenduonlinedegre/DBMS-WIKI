@@ -92,6 +92,64 @@
             
             <li class="nav-item" data-level="1"><a href="#procedural-sql" class="nav-link">Procedural SQL</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#creating-a-procedure" class="nav-link">Creating a procedure:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#variable_conflict-use_column-is-a-special-plpgsql-command-that-prevents-a-clash-between-the-parameter-names-being-used-in-the-function-and-the-argument-names-actually-passed-in-it" class="nav-link">variable_conflict use_column is a special plpgsql command that prevents a clash between the parameter names being used in the function and the argument names actually passed in it.</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#deleting-a-procedure" class="nav-link">Deleting a Procedure:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#loops" class="nav-link">Loops:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#if-then-else-and-case-statements" class="nav-link">if-then-else and case statements:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#exceptions" class="nav-link">Exceptions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#triggers" class="nav-link">Triggers</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#creating-a-trigger" class="nav-link">Creating a trigger:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#before-triggers" class="nav-link">Before triggers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#after-triggers" class="nav-link">After triggers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#row-level-triggers" class="nav-link">Row level triggers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#statement-level-triggers" class="nav-link">Statement level triggers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#dropping-a-trigger" class="nav-link">Dropping a trigger</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#using-triggers" class="nav-link">Using triggers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -102,32 +160,206 @@
 <p><a href="..">Home</a></p>
 <h1 id="procedural-sql">Procedural SQL</h1>
 <ul>
-<li></li>
-<li>Define a function that, given the name of a department, returns the count of the
-number of instructors in that department:</li>
+<li>Procedural SQL includes the imperative programming style associated with computational steps in the function calls.</li>
+<li>SQL functions: parameterized views that generalize the regular notion of
+views by allowing parameters.</li>
+<li>Supports loops, if-then-else and assignment statements.  </li>
 </ul>
-<pre><code class="language-sql">create function dept count (dept name varchar(20))
-    returns integer
+<h2 id="creating-a-procedure">Creating a procedure:</h2>
+<p><strong>Syntax</strong>:
+Here is the syntax of creating a function.</p>
+<pre><code>create function &lt;function_name&gt; (&lt;argument_name&gt; &lt;domain_of_argument&gt;)
+    returns &lt;return_type_domain&gt;
     begin
-        declare d count integer;
-        select count (*) into d count
-        from instructor
-        where instructor.dept name = dept name
-    return d cont;
+        declare &lt;variable_name&gt; &lt;domain_of_variable&gt;
+        ..... //some query to store the result into the variable.
+        .....
+    return &lt;variable_name&gt;
     end
 </code></pre>
 <ul>
-<li></li>
-<li>The function dept count can be used to find the department names and budget of all
-departments with more that 12 instructors:</li>
+<li><em>create</em> is a ddl command for creating. </li>
+<li><em>function</em> is the keyword used to signify that a function is being created. It takes an argument specified with its domain type.</li>
+<li><em>returns</em> keyword is used to signify the domain returned by the function.</li>
+<li><em>begin</em> is used to begin the body of the procedure.</li>
+<li><em>return</em> keyword before the end is used to actually return the result of the function.</li>
+<li><em>end</em> keyword is used to end the procedure.</li>
+</ul>
+<p>Define a function that, given the name of a department, returns the count of the number of instructors in that department:</p>
+<pre><code class="language-sql">create function dept_count(dept_name varchar(20))
+returns integer
+    language 'plpgsql'  
+    as $BODY$
+    #variable_conflict use_column
+    declare d_count integer;
+    begin
+       select count(*) into d_count
+       from instructor
+       where instructor.dept_name = dept_name;
+    return d_count;
+    end
+    $BODY$
+</code></pre>
+<ul>
+<li>dept_count is the name of the function that is created.</li>
+<li>The function takes dept_name of type <em>varchar(20)</em> as the argument and returns an integer.</li>
+<li>language 'plpgsql' is used to convey that we are using Procedural SQL in Postregsql.</li>
+<li>as $$ specifies the block within which the actual procedure definition starts. </li>
+<li>
+<h1 id="variable_conflict-use_column-is-a-special-plpgsql-command-that-prevents-a-clash-between-the-parameter-names-being-used-in-the-function-and-the-argument-names-actually-passed-in-it">variable_conflict use_column is a special plpgsql command that prevents a clash between the parameter names being used in the function and the argument names actually passed in it.</h1>
+</li>
+<li>In the <em>begin-end</em> clause, a variable named <em>d_count</em> of type integer is declared.</li>
+<li>The select query is used to store the count of the instructors in the dept_name taken as the argument, into the variable d_count. <em>into</em> keyword is used for that.</li>
+<li>
+<p>The variable <em>d_count</em> containing the stored result is returned by the function.<br />
+<strong>Using the function in the following query:</strong>  </p>
+</li>
+<li>
+<p>Find the department names and budget of all departments with more than 12 instructors:</p>
+</li>
 </ul>
 <pre><code class="language-sql">select dept_name, budget
 from department
 where dept_count(dept_name) &gt; 12
 </code></pre>
 <ul>
-<li></li>
-<li></li>
+<li>Here <em>dept_count(dept_name)</em> function is called in the <em>where</em> clause. The function returns the number of instructors in the department dept_name and that number is compared with 12 in the where clause. If it is greater than 12, the dept_name and budget corresponding to that row is extracted, otherwise not.</li>
+</ul>
+<p><strong>Note</strong> : Here dept_name is the same as the name of the parameter in the defined function above. Postgresql raises an error if the clash is not resolved. That is the reason why <strong>#variable_conflict use_column</strong> is used.</p>
+<h2 id="deleting-a-procedure">Deleting a Procedure:</h2>
+<p><strong>SYNTAX</strong></p>
+<pre><code>drop function &lt;function_name&gt; (&lt;argument list&gt;)
+</code></pre>
+<p>The above procedure can be deleted by:</p>
+<pre><code class="language-sql">drop function dept_count(dept_name varchar(20))
+</code></pre>
+<h2 id="loops">Loops:</h2>
+<p><strong>while loop syntax</strong></p>
+<pre><code>while &lt;boolean expression&gt; do
+&lt;sequence of statements&gt;
+end while
+</code></pre>
+<ul>
+<li>The sequence of statements will run until the boolean expression is true.
+<strong>repeat loop syntax</strong></li>
+</ul>
+<pre><code>repeat
+sequence of statements
+until boolean expression
+end repeat;
+</code></pre>
+<ul>
+<li>The sequence of statements will run until the boolean expression is false.
+<strong>for loop syntax</strong></li>
+</ul>
+<pre><code>
+</code></pre>
+<h2 id="if-then-else-and-case-statements">if-then-else and case statements:</h2>
+<p><strong>if-then-else syntax</strong></p>
+<pre><code>if &lt;boolean expression&gt; then
+    sequence of statements;
+elseif &lt;boolean expression&gt; then 
+    sequence of statements;
+else
+    sequence of statements;
+end if
+</code></pre>
+<p>where 
+* elseif is an optional clause.
+* else is a default clause.</p>
+<p><strong>Case statement syntax</strong></p>
+<pre><code>case &lt;variable&gt;
+when &lt;value1&gt; then
+    sequence of statements;
+when &lt;value2&gt; then
+    sequence of statements;
+else
+    sequence of statements;
+end case
+</code></pre>
+<p>where
+* if variable takes the particular value in the when then clause, the corresponding sequence of statements are executed.</p>
+<h2 id="exceptions">Exceptions</h2>
+<pre><code>declare out_of_classroom_seats condition
+declare exit handler for out_of_classroom_seats
+begin
+    ...
+    signal out of classroom seats
+    ...
+end
+</code></pre>
+<ul>
+<li>The handler here is exit – causes enclosing begin . . . end to be terminate and exit.</li>
+</ul>
+<h1 id="triggers">Triggers</h1>
+<ul>
+<li>a set of actions that are performed in response to an insert, update,
+or delete operation on a specified table.</li>
+</ul>
+<h2 id="creating-a-trigger">Creating a trigger:</h2>
+<p><strong>Syntax</strong>:</p>
+<pre><code>CREATE TRIGGER &lt;triggername&gt; 
+   {BEFORE | AFTER |INSTEAD OF} { INSERt | DELETE | UPDATE | TRUNCATE }
+   ON &lt;tablename&gt;
+   [FOR [EACH] { ROW | STATEMENT }]
+       EXECUTE PROCEDURE trigger_function
+</code></pre>
+<ul>
+<li>A trigger for some event (insert/delete/update/trincate) named \<triggername> is created on the table named \<tablename> either for each row or for each statement which makes it a row level or a statement level trigger accordingly, which is then executed as a procedure either before the calling of a function / after the function call or instead of the function call.</li>
+</ul>
+<h2 id="before-triggers">Before triggers</h2>
+<ul>
+<li>Run before an update, or insert.</li>
+<li>Values that are being updated or inserted can be modified before the database is
+actually modified.</li>
+</ul>
+<h2 id="after-triggers">After triggers</h2>
+<ul>
+<li>Run after an update, insert, or delete.</li>
+</ul>
+<h2 id="row-level-triggers">Row level triggers</h2>
+<ul>
+<li>Executed whenever a row is affected by the event on which the
+trigger is defined.</li>
+<li>Example: Let Employee be a table with 100 rows. Suppose an update statement is executed
+to increase the salary of each employee by 10%. Any row level update trigger
+configured on the table Employee will affect all the 100 rows in the table during this
+update.</li>
+</ul>
+<h2 id="statement-level-triggers">Statement level triggers</h2>
+<ul>
+<li>Perform a single action for all rows affected by a statement,
+instead of executing a separate action for each affected row.  </li>
+<li>Uses referencing old table or referencing new table to refer to temporary tables
+called transition tables containing the affected rows.</li>
+</ul>
+<h2 id="dropping-a-trigger">Dropping a trigger</h2>
+<p><strong>Syntax</strong>:</p>
+<pre><code>DROP TRIGGER &lt;triggername&gt; ON &lt;table_name&gt; { CASCADE | RESTRICT }
+</code></pre>
+<ul>
+<li>deleted the trigger.</li>
+</ul>
+<h2 id="using-triggers">Using triggers</h2>
+<p>Values of attributes before and after an update can be referenced:  </p>
+<ul>
+<li>referencing old row as : for deletes and updates</li>
+<li>referencing new row as : for inserts and updates
+<strong>NOTE</strong>: Triggers on update can be restricted to specific attributes</li>
+<li>For example, <code>after update of _grade_ on _takes_</code></li>
+</ul>
+<p>EXAMPLE:</p>
+<pre><code class="language-sql">create trigger setnull_trigger before update of takes
+referencing new row as nrow
+for each row
+when (nrow.grade = '')
+begin atomic
+set nrow.grade = null;
+end;
+</code></pre>
+<ul>
+<li>Converts blank grades to null.</li>
+<li>for each row specifies it as a row level trigger.</li>
 </ul></div>
             </div>
         </div>

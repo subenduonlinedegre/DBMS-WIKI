@@ -169,7 +169,7 @@ def connectDb(dbname, usrname, pwd, address, portnum):
         print(error)
     finally:
         conn.close() # close the connection
-        connectDb(&quot;mydb&quot;, &quot;myuser&quot;, &quot;mypass&quot;, &quot;127.0.0.1&quot;, &quot;5432&quot;) # function call
+connectDb(&quot;mydb&quot;, &quot;myuser&quot;, &quot;mypass&quot;, &quot;127.0.0.1&quot;, &quot;5432&quot;) # function call
 </code></pre>
 <p>OUTPUT:</p>
 <pre><code>Database Connected Successfully
@@ -230,10 +230,10 @@ def createTable():
         conn = psycopg2.connect(database = &quot;mydb&quot;, user = &quot;myuser&quot;, \
         password = &quot;mypass&quot;, host = &quot;127.0.0.1&quot;, port = &quot;5432&quot;) # connect to    the    database
         cur = conn.cursor() # create a new cursor
-        cur.execute(’’’CREATE TABLE EMPLOYEE \
+        cur.execute('''CREATE TABLE EMPLOYEE \
         (emp_num INT PRIMARY KEY NOT NULL, \
         emp_name VARCHAR(40) NOT NULL, \
-        department VARCHAR(40) NOT NULL)’’’) # execute the CREATE TABLE statement
+        department VARCHAR(40) NOT NULL)''') # execute the CREATE TABLE statement
         conn.commit() # commit the changes to the database
         print (&quot;Table created successfully&quot;)
         cur.close() # close the cursor
@@ -242,7 +242,7 @@ def createTable():
     finally:
         if conn is not None:
             conn.close() # close the connection
-            createTable() #function call
+createTable() #function call
 </code></pre>
 <p>OUTPUT:
 * If the employee table already exists:</p>
@@ -274,7 +274,7 @@ def insertRecord(num, name, dept):
     finally:
         if conn is not None:
             conn.close() # close the connection
-insertRecord(110, ‘Bhaskar’, ’HR’) #function call
+insertRecord(110, 'Bhaskar', 'HR') #function call
 </code></pre>
 <p>OUTPUT:
 * If a row already exists with emp_num=110:</p>
@@ -358,8 +358,8 @@ def selectAll():
         cur.execute(&quot;SELECT emp_num, emp_name, department FROM EMPLOYEE&quot;)
         rows = cur.fetchall() # fetches all rows of the query result set
         for row in rows:
-        print (print (&quot;Employee ID = &quot;, row[0], &quot;, NAME = &quot;, \
-        row[1], &quot;, DEPARTMENT = &quot;, row[2]))
+            print (&quot;Employee ID = &quot;, row[0], &quot;, NAME = &quot;, \
+            row[1], &quot;, DEPARTMENT = &quot;, row[2])
         cur.close() # close the cursor
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)

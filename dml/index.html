@@ -108,6 +108,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#deletes-the-data-inside-the-instructor-table" class="nav-link">* deletes the data inside the instructor table.</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
             <li class="nav-item" data-level="2"><a href="#updating-records" class="nav-link">Updating records:</a>
               <ul class="nav flex-column">
               </ul>
@@ -173,17 +177,70 @@ Along with manipulation, we also query our database in order to get the desired 
 </code></pre>
 <h2 id="this-command-deletes-all-the-records-in-the-instructor-table">* This command deletes all the records in the instructor table.</h2>
 <h2 id="truncate-command-syntax">Truncate command syntax:</h2>
-<pre><code>
-
+<ul>
+<li>Used to delete the entire data in the table.</li>
+</ul>
+<pre><code>truncate table &lt;table_name&gt;
 </code></pre>
-<pre><code class="language-sql">
+<p>where \<table_name> = name of the table whose data to be deleted.</p>
+<pre><code class="language-sql">truncate table instructor
 </code></pre>
-<hr />
+<h2 id="deletes-the-data-inside-the-instructor-table">* deletes the data inside the instructor table.</h2>
 <h2 id="updating-records">Updating records:</h2>
-<pre><code>
+<ul>
+<li>Modification of existing records.</li>
+</ul>
+<pre><code>Update &lt;table&gt;
+set col1 = val1,
+    col2 = val2,
+    ....
+where
+&lt;Predicate&gt;
 </code></pre>
-<pre><code class="language-sql">
+<p>where
+* Update= keyword used to convey the update.
+* \<table> = name of the table to update.
+* set= keyword to change a particular column value.
+* where \<Predicate>= apply the update wherever the specified condition is true.  </p>
+<p>Increase salaries of instructors whose salary is over $100,000 by 3%, and all others by a
+5%</p>
+<pre><code class="language-sql">update instructor
+set salary = salary*1.03
+where salary &gt; 100000
 </code></pre>
+<pre><code class="language-sql">update instructor
+set salary = salary*1.05
+where salary &lt;= 100000
+</code></pre>
+<h3 id="case-statements-conditional-updates">Case Statements: Conditional Updates</h3>
+<ul>
+<li>Case statements work like if-else statements in SQL.</li>
+</ul>
+<pre><code>case
+    when &lt;predicate1&gt; then &lt;result1&gt;,
+    when &lt;predicate2&gt; then &lt;result2&gt;,
+    ....
+    else &lt;resultn&gt;
+end
+</code></pre>
+<ul>
+<li><strong>case</strong> marks the beginning of the block and <strong>end</strong> keyword marks the end.</li>
+<li>Inside the block, <strong>when</strong> and <strong>then</strong> keywords are used to convey that if predicate1 turns out to be true, then the query will return result1, and so on.</li>
+<li><strong>else</strong> keyword is used to return a result when none of the above predicates evaluate to true.  </li>
+</ul>
+<p>Increase salaries of instructors whose salary is over $100,000 by 3%, and all others by a
+5%</p>
+<pre><code class="language-sql">update instructor
+set salary = case
+
+when salary &lt;= 100000
+then salary * 1.05
+else salary * 1.03
+end
+</code></pre>
+<ul>
+<li>In the above query, the salary of the instructor is replaced by 1.05 times the salary if salary&lt;=&gt;100000, else it is replaced by 1.03 times the salary.  </li>
+</ul>
 <hr />
 <h2 id="sql-query-syntax">SQL QUERY SYNTAX:</h2>
 <pre><code>select A1, A2, . . . , An,
@@ -616,6 +673,172 @@ from instructor;
 <li>Does not ignore the null values.</li>
 </ul>
 <h2 id="nested-subqueries">Nested Subqueries:</h2>
+<ul>
+<li>select-from-where expression nested within another query.
+<strong>SYNTAX</strong></li>
+</ul>
+<pre><code>select A1, A2, . . . , An
+from r1,r2, . . . ,rm
+where P
+</code></pre>
+<p>where 
+* Ai : a subquery that generates a single value.
+* ri : any valid subquery.
+* P :an expression of the form: B \<operation> (subquery)
+where B is an attribute and \<operation> is </p>
+<h3 id="subqueries-in-the-where-clause">Subqueries in the Where Clause:</h3>
+<h4 id="set-membership">Set Membership</h4>
+<ol>
+<li>Find courses offered in Fall 2009 and in Spring 2010. (intersect example).</li>
+</ol>
+<pre><code class="language-sql">select distinct course_id
+from section
+where semester ='Fall' and year = 2009 and
+course_id in (select course_id
+              from section
+              where semester ='Spring' and year = 2010)
+</code></pre>
+<ul>
+<li>The subquery returns the course_id from section table with Spring semester and 2010 as the year.</li>
+<li>
+<p>Here the <em>in</em> operator is used to check whether the course_id exists in the result of the subquery specified in the where clause.</p>
+</li>
+<li>
+<p>Find courses offered in Fall 2009 but not in Spring 2010. (except example)</p>
+</li>
+</ul>
+<pre><code class="language-sql">select distinct course_id
+from section
+where semester ='Fall' and year = 2009 and
+course_id not in (select course_id
+                  from section
+                  where semester ='Spring' and year = 2010)
+</code></pre>
+<ul>
+<li>This query returns a result opposite to the above query due to the <em>not in</em> operator.</li>
+<li>Find the total number of (distinct) students who have taken course sections taught by the instructor with ID 4233.</li>
+</ul>
+<pre><code class="language-sql">select count(distinct id)
+from takes
+where (course_id, sec_id, semester, takes.year) in
+      (select course_id, sec_id, semester, teaches.year
+       from teaches
+       where teaches.id like '4233')
+</code></pre>
+<h4 id="set-comparison">Set Comparison</h4>
+<ul>
+<li><em>some</em> clause refers to existential quantification.  </li>
+</ul>
+<p>Find names of instructors with salary greater than that of some (at least one) instructor in the Biology department.</p>
+<pre><code class="language-sql">select name
+from instructor
+where salary &gt; some(select salary
+                     from instructor
+                     where dept_name = 'Biology')
+</code></pre>
+<ul>
+<li>The above query checks if the salary of the instructor is greater than any result returned by the subquery returning the salary of the instructor in Biology department.</li>
+<li><em>all</em> clause refers to universal quantification.  </li>
+</ul>
+<p>Find the names of all instructors whose salary is greater than the salary of all instructors in the Biology department.</p>
+<pre><code class="language-sql">select name
+from instructor
+where salary &gt; all(select salary
+                  from instructor
+                  where dept_name = 'Biology')
+</code></pre>
+<ul>
+<li>The <em>all</em> clause checks if the salary of the instructor is greater than all the salaries returned by the subquery in the where clause.</li>
+</ul>
+<h4 id="exists-clause-testing-empty-relations">Exists clause: testing empty relations.</h4>
+<ul>
+<li>The exists construct returns the value <em>true</em> if the argument subquery is nonempty, else false.  </li>
+</ul>
+<p>Find all courses taught in both the Fall 2009
+semester and in the Spring 2010 semester.</p>
+<pre><code class="language-sql">select course_id
+from section as S
+where semester = 'Fall' and year = 2009 and
+      exists (select *
+              from section as T
+              where semester = 'Spring' and year = 2010
+              and S.course_id = T.course_id)
+</code></pre>
+<ul>
+<li>The <em>exists</em> clause checks if something is returned by the enclosed subquery. If yes, it is set to true, else false.</li>
+<li>Correlation name – variable S in the outer query.</li>
+<li>Correlated subquery – the inner query</li>
+</ul>
+<p>Similarly the <em>not exists</em> clause works in an opposite way:</p>
+<pre><code class="language-sql">select distinct S.ID, S.name
+from student as S
+where not exists ( (select course_id
+                    from course
+                    where dept_name = 'Biology')
+                    except
+                    (select T.course_id
+                            from takes as T
+                            where S.ID = T.ID));
+</code></pre>
+<ul>
+<li>The above contains 2 nested queries. The first nested query lists all courses offered in Biology.</li>
+<li>The second one lists all courses a particular student took.</li>
+<li>The entire query returns all students who have taken all courses offered in the Biology department.</li>
+</ul>
+<h4 id="unique-construct">Unique construct</h4>
+<ul>
+<li>True if the result of a query contains no duplicates, else false.  </li>
+</ul>
+<p>Find all courses that were offered at most once in 2009.</p>
+<pre><code class="language-sql">---DOUBT--
+</code></pre>
+<h3 id="subqueries-in-the-from-clause">Subqueries in the FROM clause</h3>
+<p>Find the average instructors' salaries of those departments where the average salary is greater than $42,000.</p>
+<pre><code class="language-sql">select dept_name, avg_salary
+from (select dept_name, avg(salary) as avg_salary
+from instructor
+group by dept_name) as foo
+where avg_salary &gt; 42000
+</code></pre>
+<ul>
+<li>It is necessary to give an alias to the relation returned by the subquery in the from clause to be able to work on it.</li>
+<li>Here the subquery returns the average salary of the instructors in each department and names that table as 'foo'. </li>
+<li>The outer query then extracts the department names and average salaries of the departments where the average salary is greater than 42000.</li>
+</ul>
+<h4 id="with-clause">With clause:</h4>
+<ul>
+<li>Defines a temporary relation whose definition is available only to the query in which the with clause occurs.    </li>
+</ul>
+<p>Find all departments with the maximum budget.</p>
+<pre><code class="language-sql">with max_budget(value) as
+          (select max(budget)
+          from department)
+select department.dept_name
+from department, max_budget
+where department.budget=max_budget.value
+</code></pre>
+<ul>
+<li>max_budget(value) is a temporary relation defined using <strong>with</strong> clause that returns the maximum budget from the departments table and is stored in max_budget.</li>
+<li>This temporary relation is used to extract the department name by doing a cross product of the relation max_budget and department where the budget of the department is equal to the value of the max_budget relation.</li>
+</ul>
+<h3 id="subqueries-in-select-clause">Subqueries in Select Clause</h3>
+<ul>
+<li>Used for scalar subqueries : queries which return a single value.</li>
+<li>Gives Runtime error if a subquery in select clause returns more than a single value.  </li>
+</ul>
+<p>List all departments along with the number of instructors in each department</p>
+<pre><code class="language-sql">select dept_name,
+(select count(*)
+from instructor
+where department.dept_name = instructor.dept_name)
+as num_instructors
+from department
+</code></pre>
+<ul>
+<li>The above nested query returns a single value as the count of instructors in a department and aliases it as num_instructors.</li>
+<li>The department name and the number of instructors is then finally displayed using the outer query.</li>
+</ul>
+<hr />
 <h2 id="joins">Joins:</h2>
 <ul>
 <li>Cartesian product which requires that tuples in the two relations
