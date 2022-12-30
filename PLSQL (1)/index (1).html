@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>PLSQL - My Docs</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">My Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">DBMS - Structured Query Language (SQL)</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">PLSQL</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../dcl/" class="nav-link">Dcl</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ddl/" class="nav-link">Ddl</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../dml/" class="nav-link">Dml</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../psycopg/" class="nav-link">Psycopg</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../tcl/" class="nav-link">Tcl</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../dcl/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#procedural-sql" class="nav-link">Procedural SQL</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#creating-a-procedure" class="nav-link">Creating a procedure:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#deleting-a-procedure" class="nav-link">Deleting a Procedure:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#table-valued-functions" class="nav-link">Table-Valued Functions:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#loops" class="nav-link">Loops:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#if-then-else-and-case-statements" class="nav-link">if-then-else and case statements:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#exceptions" class="nav-link">Exceptions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#triggers" class="nav-link">Triggers</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#creating-a-trigger" class="nav-link">Creating a trigger:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#before-triggers" class="nav-link">Before triggers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#after-triggers" class="nav-link">After triggers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#row-level-triggers" class="nav-link">Row level triggers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#statement-level-triggers" class="nav-link">Statement level triggers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#dropping-a-trigger" class="nav-link">Dropping a trigger</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#using-triggers" class="nav-link">Using triggers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="..">Home</a></p>
+<h1 id="procedural-sql">Procedural SQL</h1>
+<ul>
+<li>Procedural SQL includes the imperative programming style associated with computational steps in the function calls.</li>
+<li>SQL functions: parameterized views that generalize the regular notion of
+views by allowing parameters.</li>
+<li>Supports loops, if-then-else and assignment statements.  </li>
+</ul>
+<hr />
+<h2 id="creating-a-procedure">Creating a procedure:</h2>
+<p><strong>Syntax</strong>:
+Here is the syntax of creating a function.</p>
+<pre><code>create function &lt;function_name&gt; (&lt;argument_name&gt; &lt;domain_of_argument&gt;)
+    returns &lt;return_type_domain&gt;
+    begin
+        declare &lt;variable_name&gt; &lt;domain_of_variable&gt;
+        ..... //some query to store the result into the variable.
+        .....
+    return &lt;variable_name&gt;
+    end
+</code></pre>
+<ul>
+<li><em>create</em> is a ddl command for creating. </li>
+<li><em>function</em> is the keyword used to signify that a function is being created. It takes an argument specified with its domain type.</li>
+<li><em>returns</em> keyword is used to signify the domain returned by the function.</li>
+<li><em>begin</em> is used to begin the body of the procedure.</li>
+<li><em>return</em> keyword before the end is used to actually return the result of the function.</li>
+<li><em>end</em> keyword is used to end the procedure.</li>
+</ul>
+<p>Define a function that, given the name of a department, returns the count of the number of instructors in that department:</p>
+<pre><code class="language-sql">create function dept_count(dept_name varchar(20))
+returns integer
+    language 'plpgsql'  
+    as $BODY$
+    #variable_conflict use_column
+    declare d_count integer;
+    begin
+       select count(*) into d_count
+       from instructor
+       where instructor.dept_name = dept_name;
+    return d_count;
+    end
+    $BODY$
+</code></pre>
+<ul>
+<li>dept_count is the name of the function that is created.</li>
+<li>The function takes dept_name of type <em>varchar(20)</em> as the argument and returns an integer.</li>
+<li>language 'plpgsql' is used to convey that we are using Procedural SQL in Postregsql.</li>
+<li>as $$ specifies the block within which the actual procedure definition starts. </li>
+<li>#variable_conflict use_column is a special plpgsql command that prevents a clash between the parameter names being used in the function and the argument names actually passed in it.</li>
+<li>In the <em>begin-end</em> clause, a variable named <em>d_count</em> of type integer is declared.</li>
+<li>The select query is used to store the count of the instructors in the dept_name taken as the argument, into the variable d_count. <em>into</em> keyword is used for that.</li>
+<li>The variable <em>d_count</em> containing the stored result is returned by the function.    </li>
+</ul>
+<p><strong>Using the function in the following query:</strong>  </p>
+<ul>
+<li>Find the department names and budget of all departments with more than 12 instructors:</li>
+</ul>
+<pre><code class="language-sql">select dept_name, budget
+from department
+where dept_count(dept_name) &gt; 12
+</code></pre>
+<ul>
+<li>Here <em>dept_count(dept_name)</em> function is called in the <em>where</em> clause. The function returns the number of instructors in the department dept_name and that number is compared with 12 in the where clause. If it is greater than 12, the dept_name and budget corresponding to that row is extracted, otherwise not.</li>
+</ul>
+<p><strong>Note</strong> : Here dept_name is the same as the name of the parameter in the defined function above. Postgresql raises an error if the clash is not resolved. That is the reason why <strong>#variable_conflict use_column</strong> is used.</p>
+<hr />
+<h2 id="deleting-a-procedure">Deleting a Procedure:</h2>
+<p><strong>SYNTAX</strong></p>
+<pre><code>drop function &lt;function_name&gt; (&lt;argument list&gt;)
+</code></pre>
+<p>The above procedure can be deleted by:</p>
+<pre><code class="language-sql">drop function dept_count(dept_name varchar(20))
+</code></pre>
+<hr />
+<h2 id="table-valued-functions">Table-Valued Functions:</h2>
+<ul>
+<li>Return a table as a result of the function.  </li>
+</ul>
+<pre><code class="language-sql">create or replace function instructor_of(dept_name char(20))
+            returns table(
+            id varchar(5),
+            name varchar(20),
+            dept_name varchar(20),
+            salary numeric(8,2))
+            language plpgsql
+            as $$
+            begin 
+            return query
+select instructor.id, instructor.name, instructor.dept_name, instructor.salary
+from instructor
+where instructor.dept_name = instructor_of.dept_name ;
+end;
+$$;
+</code></pre>
+<ul>
+<li>A select query is returned that in turn returns a table as a result.
+NOTE: The columns in the select query should match with the columns in the expected resulting table.  </li>
+</ul>
+<pre><code class="language-sql">select *  from instructor_of('Music')
+</code></pre>
+<ul>
+<li>Returns a table consisting of all the tuples where the department name is 'Music'. </li>
+</ul>
+<hr />
+<h2 id="loops">Loops:</h2>
+<p><strong>While loop syntax</strong></p>
+<pre><code>while &lt;boolean expression&gt; do
+&lt;sequence of statements&gt;
+end while
+</code></pre>
+<ul>
+<li>The sequence of statements will run until the boolean expression is true.    </li>
+</ul>
+<p>EXAMPLE:  </p>
+<pre><code class="language-sql">do $$
+declare
+add integer := 10;
+begin
+while add &gt; 0 loop
+raise notice 'Out addition count %',add;
+add := add-1;
+end loop;
+end$$;
+</code></pre>
+<p>OUTPUT:  </p>
+<pre><code>NOTICE:  Out addition count 10
+NOTICE:  Out addition count 9
+NOTICE:  Out addition count 8
+NOTICE:  Out addition count 7
+NOTICE:  Out addition count 6
+NOTICE:  Out addition count 5
+NOTICE:  Out addition count 4
+NOTICE:  Out addition count 3
+NOTICE:  Out addition count 2
+NOTICE:  Out addition count 1
+DO
+
+Query returned successfully in 137 msec.
+</code></pre>
+<p><strong>Repeat loop syntax</strong></p>
+<pre><code>repeat
+sequence of statements
+until boolean expression
+end repeat;
+</code></pre>
+<ul>
+<li>The sequence of statements will run until the boolean expression is false.  </li>
+</ul>
+<p><strong>For loop syntax</strong></p>
+<pre><code>[ &lt;&lt;label&gt;&gt; ]
+for loop_count in [ reverse ] from.. to [ by step ] loop
+    statements
+end loop [ label ];
+</code></pre>
+<p>EXAMPLE:</p>
+<pre><code>do $$
+begin
+   for cnt in reverse 10..1 loop
+      raise notice 'cnt: %', cnt;
+   end loop;
+end; $$
+</code></pre>
+<p>OUTPUT:  </p>
+<pre><code class="language-sql">NOTICE:  cnt: 10
+NOTICE:  cnt: 9
+NOTICE:  cnt: 8
+NOTICE:  cnt: 7
+NOTICE:  cnt: 6
+NOTICE:  cnt: 5
+NOTICE:  cnt: 4
+NOTICE:  cnt: 3
+NOTICE:  cnt: 2
+NOTICE:  cnt: 1
+DO
+
+Query returned successfully in 91 msec.
+</code></pre>
+<hr />
+<h2 id="if-then-else-and-case-statements">if-then-else and case statements:</h2>
+<p><strong>if-then-else syntax</strong></p>
+<pre><code>if &lt;boolean expression&gt; then
+    sequence of statements;
+elseif &lt;boolean expression&gt; then 
+    sequence of statements;
+else
+    sequence of statements;
+end if
+</code></pre>
+<p>where 
+* elseif is an optional clause.
+* else is a default clause.</p>
+<hr />
+<p><strong>Case statement syntax</strong></p>
+<pre><code>case &lt;variable&gt;
+when &lt;value1&gt; then
+    sequence of statements;
+when &lt;value2&gt; then
+    sequence of statements;
+else
+    sequence of statements;
+end case
+</code></pre>
+<p>where
+* if variable takes the particular value in the when then clause, the corresponding sequence of statements are executed.</p>
+<hr />
+<h2 id="exceptions">Exceptions</h2>
+<pre><code>declare out_of_classroom_seats condition
+declare exit handler for out_of_classroom_seats
+begin
+    ...
+    signal out of classroom seats
+    ...
+end
+</code></pre>
+<ul>
+<li>The handler here is exit – causes enclosing begin . . . end to be terminate and exit.</li>
+</ul>
+<hr />
+<h1 id="triggers">Triggers</h1>
+<ul>
+<li>a set of actions that are performed in response to an insert, update,
+or delete operation on a specified table.</li>
+</ul>
+<h2 id="creating-a-trigger">Creating a trigger:</h2>
+<p><strong>Syntax</strong>:</p>
+<pre><code>CREATE TRIGGER &lt;triggername&gt; 
+   {BEFORE | AFTER |INSTEAD OF} { INSERt | DELETE | UPDATE | TRUNCATE }
+   ON &lt;tablename&gt;
+   [FOR [EACH] { ROW | STATEMENT }]
+       EXECUTE PROCEDURE trigger_function
+</code></pre>
+<ul>
+<li>A trigger for some event (insert/delete/update/trincate) named \<triggername> is created on the table named \<tablename> either for each row or for each statement which makes it a row level or a statement level trigger accordingly, which is then executed as a procedure either before the calling of a function / after the function call or instead of the function call.</li>
+</ul>
+<h2 id="before-triggers">Before triggers</h2>
+<ul>
+<li>Run before an update, or insert.</li>
+<li>Values that are being updated or inserted can be modified before the database is
+actually modified.</li>
+</ul>
+<h2 id="after-triggers">After triggers</h2>
+<ul>
+<li>Run after an update, insert, or delete.</li>
+</ul>
+<h2 id="row-level-triggers">Row level triggers</h2>
+<ul>
+<li>Executed whenever a row is affected by the event on which the
+trigger is defined.</li>
+<li>Example: Let Employee be a table with 100 rows. Suppose an update statement is executed
+to increase the salary of each employee by 10%. Any row level update trigger
+configured on the table Employee will affect all the 100 rows in the table during this
+update.</li>
+</ul>
+<h2 id="statement-level-triggers">Statement level triggers</h2>
+<ul>
+<li>Perform a single action for all rows affected by a statement,
+instead of executing a separate action for each affected row.  </li>
+<li>Uses referencing old table or referencing new table to refer to temporary tables
+called transition tables containing the affected rows.</li>
+</ul>
+<h2 id="dropping-a-trigger">Dropping a trigger</h2>
+<p><strong>Syntax</strong>:</p>
+<pre><code>DROP TRIGGER &lt;triggername&gt; ON &lt;table_name&gt; { CASCADE | RESTRICT }
+</code></pre>
+<ul>
+<li>deleted the trigger.</li>
+</ul>
+<h2 id="using-triggers">Using triggers</h2>
+<p>Values of attributes before and after an update can be referenced:  </p>
+<ul>
+<li>referencing old row as : for deletes and updates</li>
+<li>referencing new row as : for inserts and updates
+<strong>NOTE</strong>: Triggers on update can be restricted to specific attributes</li>
+<li>For example, <code>after update of _grade_ on _takes_</code></li>
+</ul>
+<p><strong>SYNTAX</strong>:</p>
+<pre><code>CREATE FUNCTION trigger_function() 
+   RETURNS TRIGGER 
+   LANGUAGE PLPGSQL
+AS $$
+BEGIN
+   -- trigger logic
+END;
+$$
+</code></pre>
+<h3 id="a-case-study">A Case Study</h3>
+<p>Consider a student result management system in DBMS in which the teachers need to insert the entries of students into a table that contains the following columns:
+* Roll_no = Primary key
+* Name
+* marks1 corresponding to DDL marks
+* marks2 corresponding to DML marks
+* marks3 corresponding to TCL marks
+* total_marks = sum total of all the marks
+* average_marks = average of the marks scored in the 3 subjects.<br />
+Given below is the SQL code for the table:</p>
+<pre><code class="language-sql">create table student(
+roll_no int primary key,
+name varchar(20),
+marks1 int,
+marks2 int,
+marks3 int,
+total_marks int,
+average_marks float)
+</code></pre>
+<p>Now, in order to automate the process of calculating the average marks of all the subjects and store them in the average_marks column, each time a teacher inserts a new tuple into the relation, the database administrator decided to create a trigger that will accelerate the calculation of total_marks and average_marks <em>before</em> each <em>insert</em>.</p>
+<pre><code class="language-sql">create or replace function calc_total_avg()
+returns trigger
+as $$
+declare 
+total int; avgerage float;
+begin
+    total =new.marks1 + new.marks2 + new.marks3;
+    new.total_marks=total;
+    new.average_marks=total/3;
+return new;
+end;
+$$
+language plpgsql;
+</code></pre>
+<ul>
+<li>A function called calc_total_avg() is created if it doesn't exist already / replaced if it exists already, and returns a trigger which does the required task.</li>
+<li>2 variables: total of type integer and avgerage of type float are created.</li>
+<li>The begin-end block contains the working of the function after declaring the variables.</li>
+<li>new marks the new entry that has been entered by the user. The attributes: marks1, marks2 and marks3 are accessed, added and stored in total.</li>
+<li>total is then stored in the total_marks column of the new entry.</li>
+<li>total is then divided by the total number of subjects (3 in this case) to give the average marks and the result is stored in the average_marks column.</li>
+</ul>
+<p>Creating the trigger:</p>
+<pre><code class="language-sql">create trigger calc_total_avg_insert
+before insert
+on student
+for each row
+execute procedure calc_total_avg();
+</code></pre>
+<ul>
+<li>A trigger called calc_total_avg_insert is created to <code>execute</code> the <strong>procedure</strong> called calc_total_avg() before the event of <strong>insertion</strong> on the student relation.</li>
+<li>It is a row level trigger as we need to perform the operation for each row. ~ <code>for each row</code>.</li>
+</ul>
+<p>The teachers now start adding entries into the table. The values just contain the roll number, name of the students, marks1, marks2 and marks3. The calculation of total_marks and average_narks is triggered before each insert automatically.  </p>
+<pre><code class="language-sql">insert into student values(1,'Subendu',90,98,94)
+</code></pre>
+<p>Let us check the entries in the table: </p>
+<pre><code class="language-sql">select * from student
+</code></pre>
+<ul>
+<li>The result contains the values added as well as the total_marks and average_marks calculated along with them.  </li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

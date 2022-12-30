@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Dcl - My Docs</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">My Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">DBMS - Structured Query Language (SQL)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../PLSQL/" class="nav-link">PLSQL</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Dcl</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../ddl/" class="nav-link">Ddl</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../dml/" class="nav-link">Dml</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../psycopg/" class="nav-link">Psycopg</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../tcl/" class="nav-link">Tcl</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../PLSQL/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../ddl/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#data-control-language" class="nav-link">Data Control Language:</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#grant" class="nav-link">Grant</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#revoke" class="nav-link">Revoke</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#authorisation-on-views" class="nav-link">Authorisation on Views:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#other-features" class="nav-link">Other features:</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><a href="..">Home</a></p>
+<h1 id="data-control-language">Data Control Language:</h1>
+<ul>
+<li>Deals with the security of the database.</li>
+<li>Maintains concurrent access.</li>
+<li>Grants and revokes various permissions to access the database.</li>
+</ul>
+<p>Forms of authorization on parts of the database:  </p>
+<ul>
+<li>Read - allows reading, but not modification of data</li>
+<li>Insert - allows insertion of new data, but not modification of existing data</li>
+<li>Update - allows modification, but not deletion of data</li>
+<li>Delete - allows deletion of data</li>
+</ul>
+<p>Forms of authorization to modify the database schema:</p>
+<ul>
+<li>Index - allows creation and deletion of indices</li>
+<li>Resources - allows creation of new relations</li>
+<li>Alteration - allows addition or deletion of attributes in a relation</li>
+<li>Drop - allows deletion of relations</li>
+</ul>
+<hr />
+<h2 id="grant">Grant</h2>
+<ul>
+<li>used to confer authorisation  </li>
+</ul>
+<p><strong>SYNTAX</strong></p>
+<pre><code>grant &lt;privilege list&gt;
+on &lt;relation name or view name&gt; to &lt;user list&gt;
+</code></pre>
+<p>where:  </p>
+<ul>
+<li><em>privilege list</em> includes:  </li>
+<li>select: allows read access to relation.</li>
+<li>insert: the ability to insert tuples.</li>
+<li>update: the ability to update using the SQL update statement.</li>
+<li>delete: the ability to delete tuples.</li>
+<li>all privileges: used as a short form for all the allowable privileges.  </li>
+</ul>
+<p>Example:</p>
+<pre><code class="language-sql">grant select on instructor to U1,U2,U3
+</code></pre>
+<ul>
+<li>The above query grants the <em>select</em> privilege on the <em>instructor</em> table to the users <em>U1, U2</em> and <em>U3</em>.  </li>
+</ul>
+<p><strong><em>user list</em></strong> includes:   </p>
+<ul>
+<li>a user-id</li>
+<li>public -  which allows all valid users the privilege granted</li>
+<li>A role - groups users under a name so that privileges can be added powerfully to a group directly rather than granting one by one to each user.  </li>
+</ul>
+<h3 id="creating-a-role">Creating a role:</h3>
+<pre><code class="language-sql">create role instructor1;
+grant select on takes to instructor1
+</code></pre>
+<ul>
+<li>The above query creates a role named <em>instructor1</em> and grants the <em>select</em> privilege of the table <em>takes</em> to the users falling under the role of <em>instructor1</em>.  </li>
+</ul>
+<pre><code class="language-sql">create role teaching_assistant;
+grant teaching_assistant to instructor1;
+</code></pre>
+<ul>
+<li>The above query creates a role named <em>teaching_assistant</em> and grants the privileges available to the role to the users falling under the role of <em>instructor1</em>. This means <em>instructor1</em> inherits the permissions from <em>teaching_assistant</em>.</li>
+<li>A chain of roles can be constructed likewish in an organisational hierarchy. </li>
+</ul>
+<p><strong>NOTE</strong> :  </p>
+<ul>
+<li>Granting a privilege on a view does not imply granting any privileges on the underlying
+relations.</li>
+<li>The grantor of the privilege must already hold the privilege on the specified item (or be
+the database administrator).</li>
+</ul>
+<hr />
+<h2 id="revoke">Revoke</h2>
+<ul>
+<li>Used to revoke authorization.  </li>
+</ul>
+<p><strong>SYNTAX</strong></p>
+<pre><code>revoke &lt;privilege list&gt;
+on &lt;relation name or view name&gt; from &lt;user list&gt;
+</code></pre>
+<p>Example:</p>
+<pre><code class="language-sql">revoke select on branch from U1,U2,U3
+</code></pre>
+<ul>
+<li>The above query revokes the <em>select</em> privilege on the <em>instructor</em> table for the users <em>U1, U2</em> and <em>U3</em>.</li>
+</ul>
+<pre><code class="language-sql">revoke select on takes from instructor1;
+</code></pre>
+<p><strong>NOTE</strong>:  </p>
+<ul>
+<li>If the same privilege was granted twice to the same user by different grantees, the user
+may retain the privilege after the revocation.</li>
+<li>All privileges that depend on the privilege being revoked are also revoked.</li>
+</ul>
+<hr />
+<h2 id="authorisation-on-views">Authorisation on Views:</h2>
+<pre><code class="language-sql">create role geo_staff;
+create view geo_instructor as
+(select *
+from instructor
+where dept_name = 'Geology');
+grant select on geo_instructor to geo_staff
+</code></pre>
+<ul>
+<li>The above query creates a view named <em>geo_instructor</em> that contains all the tuples from the relation <em>instructor</em> where department name is Geology. It then grants the <em>select</em> privilege of the view created to the role named <em>geo_staff</em>.</li>
+</ul>
+<hr />
+<h2 id="other-features">Other features:</h2>
+<ul>
+<li>References privilege to create foreign key</li>
+</ul>
+<pre><code class="language-sql">create role Mariano;
+grant references (dept_name) on department to Mariano;
+</code></pre>
+<ul>
+<li>This is required to grant the referential integrity constraint.
+Transfer of privileges:</li>
+</ul>
+<pre><code class="language-sql">grant select on department to instructor1 with grant option
+</code></pre>
+<ul>
+<li>Here the keywords <strong>with grant option</strong> signify that the select privilege has been given to <em>instructor1</em> and he will further be able to grant it to any other user or role.  </li>
+</ul>
+<pre><code class="language-sql">revoke select on department from instructor1, geo_staff cascade
+</code></pre>
+<ul>
+<li>Cascade signifies that select privilege will be revoked along with all other privileges which depend on it.</li>
+</ul>
+<pre><code class="language-sql">oke select on department from instructor1, geo_staff restrict
+</code></pre>
+<ul>
+<li>Restrict signifies that select privilege will only be revoked it there are no other privileges depending on it.</li>
+</ul>
+<hr /></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
